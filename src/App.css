@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+.red-text {
+    color: red;
+}
+
+.green-text {
+    color: green;
+}
+
 .App {
   text-align: center;
 }
