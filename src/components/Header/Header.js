@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Header.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -13,24 +13,20 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link to="/" className="nav-link">Home</Link>
-                        <Link to="/user" className="nav-link">User</Link>
-                        <Link to="/Admin" className="nav-link">Admin</Link>
+                        <NavLink to="/" className="nav-link">Home</NavLink>
+                        <NavLink to="/user" className="nav-link">User</NavLink>
+                        <NavLink to="/Admin" className="nav-link">Admin</NavLink>
                         {/* <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/user">User</Nav.Link>
                         <Nav.Link href="/admin">Admin</Nav.Link> */}
                     </Nav>
                     <Nav>
                         <NavDropdown title="Settings" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Logout
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Help</NavDropdown.Item>
+                            <NavDropdown.Item>Login</NavDropdown.Item>
+                            <NavDropdown.Item>Logout</NavDropdown.Item>
+                            <NavDropdown.Item>Help</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Profile
-                            </NavDropdown.Item>
+                            <NavDropdown.Item>Profile</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

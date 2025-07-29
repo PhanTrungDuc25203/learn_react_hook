@@ -1,3 +1,16 @@
-.navbar-expand-lg{
-    background-color: #f7f7f7;
+.navbar-expand-lg {
+    // background-color: #f7f7f7;
+    font-weight: 600;
+    font-size  : 1.25rem;
+
+    .navbar-nav {
+        .nav-link {
+            &.active {
+                color: #00bfff;
+            }
+
+            margin-left : 0.5rem;
+            margin-right: 0.5rem;
+        }
+    }
 }

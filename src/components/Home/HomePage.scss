@@ -1,0 +1,91 @@
+.homepage-container {
+    display   : flex;
+    //   width: 100vw;
+    overflow  : hidden;
+    flex-flow : column;
+
+    .background-banner {
+        padding-top: 4rem;
+        display    : flex;
+        width      : 100vw;
+        overflow   : hidden;
+
+        .left-half {
+            width           : 50%;
+            background-color: #fff; // nền trắng khi không có video phủ
+            display         : flex;
+            justify-content : center;
+            align-items     : center;
+
+            .background-video {
+                width     : 100%;
+                height    : auto;
+                object-fit: cover;
+            }
+        }
+
+        .right-half {
+            width           : 50%;
+            background-color: #fff; // màu nền nhẹ nhàng cho phần text
+            display         : flex;
+            flex-flow       : column;
+            justify-content : center;
+            align-items     : flex-start;
+            padding         : 3rem;
+
+            .product-description {
+                max-width : 600px;
+                text-align: left;
+
+                .intro-title {
+                    font-size  : 3.5rem;
+                    font-weight: 500;
+                }
+
+                p {
+                    margin-top : 20px;
+                    font-size  : 1.5rem;
+                    line-height: 1.6;
+                }
+            }
+
+            /* From Uiverse.io by alexroumi */
+            button {
+                margin-top   : 20px;
+                padding      : 15px 25px;
+                border       : unset;
+                border       : #212121;
+                border-radius: 15px;
+                color        : #212121;
+                z-index      : 1;
+                background   : #e8e8e8;
+                position     : relative;
+                font-weight  : 600;
+                font-size    : 1.1rem;
+                transition   : all 250ms;
+                overflow     : hidden;
+            }
+
+            button::before {
+                content         : "";
+                position        : absolute;
+                top             : 0;
+                left            : 0;
+                height          : 100%;
+                width           : 0;
+                border-radius   : 15px;
+                background-color: #212121;
+                z-index         : -1;
+                transition      : all 250ms
+            }
+
+            button:hover {
+                color: #e8e8e8;
+            }
+
+            button:hover::before {
+                width: 100%;
+            }
+        }
+    }
+}
