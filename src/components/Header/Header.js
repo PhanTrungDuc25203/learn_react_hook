@@ -8,8 +8,10 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">Ecami</Navbar.Brand>
+      <Container className="header-item-container">
+        <Navbar.Brand href="#home" className="app-name">
+          Ecami
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -27,13 +29,17 @@ const Header = () => {
                         <Nav.Link href="/admin">Admin</Nav.Link> */}
           </Nav>
           <Nav>
-            <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item>Login</NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
+            <div className="header-button-container">
+              <button className="header-login-button">Login</button>
+              <button className="header-register-button">Register</button>
+            </div>
+            {/* <NavDropdown title="Settings" id="basic-nav-dropdown">
+              <NavDropdown.Item>Profile</NavDropdown.Item>
+              <NavDropdown.Item>Settings and securities</NavDropdown.Item>
               <NavDropdown.Item>Help</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-            </NavDropdown>
+              <NavDropdown.Item>Logout</NavDropdown.Item>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,16 +1,54 @@
 .navbar-expand-lg {
+  margin: auto 50px;
   // background-color: #f7f7f7;
   font-weight: 600;
   font-size: 1.25rem;
 
+  .app-name {
+    font-size: 40px;
+    margin-top: -10px;
+  }
+
   .navbar-nav {
     .nav-link {
       &.active {
-        color: #00bfff;
+        color: rgb(67, 67, 67);
+        font-weight: 700;
       }
 
       margin-left: 0.5rem;
       margin-right: 0.5rem;
+    }
+  }
+  .header-button-container {
+    display: flex;
+    gap: 1rem;
+    .header-login-button {
+      width: 80px;
+      color: rgb(111, 111, 111);
+      padding: 5px 10px;
+      background-color: white;
+      border: 2px solid rgb(111, 111, 111);
+      border-radius: 10px;
+      transition: all 0.25s;
+      &:hover {
+        border-radius: 13px;
+        border: 2px solid black;
+        color: black;
+      }
+    }
+    .header-register-button {
+      width: 100px;
+      color: white;
+      padding: 5px 10px;
+      background-color: rgba(65, 65, 65, 0.55);
+      border: none;
+      border-radius: 10px;
+      transition: all 0.25s;
+      &:hover {
+        border-radius: 13px;
+        background-color: black;
+      }
     }
   }
 }
