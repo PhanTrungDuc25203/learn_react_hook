@@ -21,6 +21,7 @@ import sidebarBg from "../../assets/bg2.jpg";
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
 import "./SideBar.scss";
+import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
@@ -36,7 +37,7 @@ const SideBar = (props) => {
         <SidebarHeader>
           <div
             style={{
-              padding: "15px",
+              padding: "5px",
               textTransform: "uppercase",
               fontWeight: "bold",
               fontSize: 14,
@@ -46,7 +47,11 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <DiReact size={"3rem"} color={"00bfff"} />
+            <DiReact
+              size={"3rem"}
+              color={"00bfff"}
+              style={{ marginLeft: "9px" }}
+            />
             <span>Ecami</span>
           </div>
         </SidebarHeader>
@@ -57,6 +62,7 @@ const SideBar = (props) => {
               icon={<FaTachometerAlt />}
               //   suffix={<span className="badge red">New</span>}
             >
+              <Link to="/admin" />
               Dashboard
             </MenuItem>
             <MenuItem icon={<FaGem />}> components </MenuItem>
@@ -67,7 +73,10 @@ const SideBar = (props) => {
               icon={<FaList />}
               title={"Management"}
             >
-              <MenuItem> Users management</MenuItem>
+              <MenuItem>
+                <Link to="/admin/manage-user" />
+                Users management
+              </MenuItem>
               <MenuItem> Exam management</MenuItem>
               <MenuItem> Quiz management</MenuItem>
             </SubMenu>
