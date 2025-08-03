@@ -60,6 +60,7 @@ const SideBar = (props) => {
                 fontWeight: "600",
                 display: "inline-block",
                 verticalAlign: "middle",
+                marginLeft: "0.2rem",
               }}
             >
               {collapsed ? "" : "Ecami"}
@@ -70,18 +71,26 @@ const SideBar = (props) => {
         <SidebarContent>
           <Menu iconShape="circle">
             <MenuItem
-              icon={<FaTachometerAlt />}
+              style={{ fontSize: "18px" }}
+              icon={<FaTachometerAlt style={{ fontSize: "18px" }} />}
               //   suffix={<span className="badge red">New</span>}
             >
               <Link to="/admin" />
               Dashboard
             </MenuItem>
-            <MenuItem icon={<FaGem />}> components </MenuItem>
+            <MenuItem
+              style={{ fontSize: "18px" }}
+              icon={<FaGem style={{ fontSize: "18px" }} />}
+            >
+              {" "}
+              Intruction{" "}
+            </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu
               //   suffix={<span className="badge yellow">3</span>}
-              icon={<FaList />}
+              style={{ fontSize: "18px" }}
+              icon={<FaList style={{ fontSize: "18px" }} />}
               title={"Management"}
             >
               <MenuItem>

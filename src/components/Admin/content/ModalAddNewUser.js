@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FaCameraRetro } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ModalAddNewUser = () => {
   const [show, setShow] = useState(false);
@@ -34,15 +35,53 @@ const ModalAddNewUser = () => {
     }
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+    return regex.test(password);
+  };
+
   const handleSubmitAddNewUser = async () => {
-    // let data = {
-    //   email: email,
-    //   password: password,
-    //   username: username,
-    //   role: role,
-    //   userImage: image,
-    // };
-    // console.log(data);
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      toast.error("Your email is not valid!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+      return;
+    }
+    const isPasswordValid = validatePassword(password);
+    if (!isPasswordValid) {
+      toast.error(
+        "Password must be at least 6 characters long and contain at least one uppercase letter, one number, and one special character.!",
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          // transition: Bounce,
+        }
+      );
+      return;
+    }
     const data = new FormData();
     data.append("email", email);
     data.append("password", password);
@@ -54,7 +93,35 @@ const ModalAddNewUser = () => {
       "http://localhost:8081/api/v1/participant",
       data
     );
-    console.log(res);
+    console.log(res.đata);
+    if (res.data && res.data.EC === 0) {
+      toast.success(res.data.EM, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+      handleClose();
+    }
+    if (res.data && res.data.EC !== 0) {
+      toast.error(res.data.EM, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+      handleClose();
+    }
   };
 
   return (
@@ -129,7 +196,7 @@ const ModalAddNewUser = () => {
             </div>
             <div className="col-md-3 img-preview">
               {previewImage ? (
-                <img src={previewImage} />
+                <img src={previewImage} alt="preview" />
               ) : (
                 <label htmlFor="uploadImg">
                   <FaCameraRetro id="add-img-icon" />
