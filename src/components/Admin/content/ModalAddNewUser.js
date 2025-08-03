@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FaCameraRetro } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { postAddNewUser } from "../../../services/apiServices";
 
 const ModalAddNewUser = () => {
   const [show, setShow] = useState(false);
@@ -82,20 +82,10 @@ const ModalAddNewUser = () => {
       );
       return;
     }
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-    data.append("username", username);
-    data.append("role", role);
-    data.append("userImage", image);
 
-    let res = await axios.post(
-      "http://localhost:8081/api/v1/participant",
-      data
-    );
-    console.log(res.đata);
-    if (res.data && res.data.EC === 0) {
-      toast.success(res.data.EM, {
+    let data = await postAddNewUser(email, password, username, role, image);
+    if (data && data.EC === 0) {
+      toast.success(data.EM, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -108,8 +98,8 @@ const ModalAddNewUser = () => {
       });
       handleClose();
     }
-    if (res.data && res.data.EC !== 0) {
-      toast.error(res.data.EM, {
+    if (data && data.EC !== 0) {
+      toast.error(data.EM, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -120,7 +110,6 @@ const ModalAddNewUser = () => {
         theme: "colored",
         // transition: Bounce,
       });
-      handleClose();
     }
   };
 
