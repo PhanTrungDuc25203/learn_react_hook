@@ -1,10 +1,21 @@
 .manage-user-container {
+  width: 100%;
   .title {
+    height: 58px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .users-content {
     .user-data-operation {
+      display: flex;
+      flex-direction: row-reverse;
+      padding: 10px 20px;
     }
-    .user-data-table {
+    .user-data-table-container {
     }
   }
 }

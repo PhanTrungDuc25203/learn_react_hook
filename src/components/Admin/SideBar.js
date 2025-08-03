@@ -45,6 +45,8 @@ const SideBar = (props) => {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
+              //   display: "flex",
+              //   alignItems: "center",
             }}
           >
             <DiReact
@@ -52,7 +54,16 @@ const SideBar = (props) => {
               color={"00bfff"}
               style={{ marginLeft: "9px" }}
             />
-            <span>Ecami</span>
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "inline-block",
+                verticalAlign: "middle",
+              }}
+            >
+              {collapsed ? "" : "Ecami"}
+            </span>
           </div>
         </SidebarHeader>
 

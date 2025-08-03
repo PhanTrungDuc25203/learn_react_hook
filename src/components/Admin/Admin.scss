@@ -1,4 +1,5 @@
 .admin-container {
+  width: 100%;
   display: flex;
   .admin-sidebar {
     .pro-sidebar {
@@ -7,9 +8,20 @@
   }
 
   .admin-content {
+    width: 100%;
     .admin-header {
-        height: 40px;
-        
+      font-size: 25px;
+      color: #a9a9a9;
+      position: absolute;
+      top: 0.5rem;
+      margin-left: 1rem;
+      //   left: 20rem;
+      height: 40px;
+      cursor: pointer;
+      transition: color 0.25s;
+      &:hover {
+        color: #717171;
+      }
     }
     .admin-main {
     }

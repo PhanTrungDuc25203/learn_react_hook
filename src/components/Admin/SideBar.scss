@@ -20,11 +20,6 @@ $highlight-color: #ffcc00;
     text-overflow: ellipsis;
     overflow: hidden;
 
-    span {
-      margin-left: 5px;
-      font-size: 13px;
-    }
-
     &:hover {
       color: $highlight-color;
     }
