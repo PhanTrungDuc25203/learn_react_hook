@@ -23,6 +23,7 @@ const UserDataTable = (props) => {
           <th scope="col">Email</th>
           <th scope="col">Username</th>
           <th scope="col">Role</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -33,11 +34,27 @@ const UserDataTable = (props) => {
               <td>{item.email}</td>
               <td>{item.username}</td>
               <td>{item.role}</td>
+              <td className="action-cell">
+                <div className="btn-container">
+                  <button
+                    className="action-btn view-btn"
+                    data-label="View"
+                  ></button>
+                  <button
+                    className="action-btn update-btn"
+                    data-label="Update"
+                  ></button>
+                  <button
+                    className="action-btn delete-btn"
+                    data-label="Delete"
+                  ></button>
+                </div>
+              </td>
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="4">
+            <td colSpan="5">
               <div className="no-user-found">No user found</div>
             </td>
           </tr>

@@ -28,6 +28,71 @@
         color: #777;
         font-style: italic;
       }
+
+      .action-cell {
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+
+        .btn-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          height: 25px;
+          width: 100%;
+          .action-btn {
+            width: 15px;
+            height: 15px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: gray;
+            color: white;
+            font-size: 0; /* Ẩn chữ ban đầu */
+            border: none;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            transform-origin: center center;
+
+            &::after {
+              content: attr(data-label);
+              margin-left: 0px;
+              opacity: 0;
+              font-size: 9px; /* 👈 font chữ nhỏ hơn */
+              visibility: hidden;
+              transition: opacity 0.5s ease;
+              white-space: nowrap;
+              //   letter-spacing: -0.3px;
+              //   line-height: 0.5;
+            }
+
+            &:hover {
+              width: auto;
+              padding: 0px 10px;
+              border-radius: 20px;
+              //   transform: scaleX(1.8);
+              //   background-color: inherit;
+
+              &::after {
+                opacity: 1;
+                visibility: visible;
+              }
+            }
+          }
+
+          .view-btn {
+            background-color: #007bff;
+          }
+
+          .update-btn {
+            background-color: #f5b800;
+          }
+
+          .delete-btn {
+            background-color: #dc3545;
+          }
+        }
+      }
     }
   }
 }
