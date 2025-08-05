@@ -4,6 +4,9 @@
   .admin-sidebar {
     .pro-sidebar {
       height: 100vh !important;
+      position: sticky;
+      top: 0;
+      left: 0;
     }
   }
 
@@ -12,8 +15,9 @@
     .admin-header {
       font-size: 25px;
       color: #a9a9a9;
-      position: absolute;
+      position: sticky;
       top: 0.5rem;
+      left: 30px;
       margin-left: 1rem;
       //   left: 20rem;
       height: 40px;

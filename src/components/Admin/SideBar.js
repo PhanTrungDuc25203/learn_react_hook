@@ -9,22 +9,43 @@ import {
   SidebarContent,
 } from "react-pro-sidebar";
 
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaList,
-  FaGithub,
-  FaRegLaughWink,
-  FaHeart,
-} from "react-icons/fa";
-import sidebarBg from "../../assets/bg2.jpg";
+import { FaTachometerAlt, FaGem, FaList, FaGithub } from "react-icons/fa";
 import { DiReact } from "react-icons/di";
-import { MdDashboard } from "react-icons/md";
+import sidebarBg from "../../assets/bg2.jpg";
 import "./SideBar.scss";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const SideBar = (props) => {
-  const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const { image, collapsed, toggled, handleToggleSidebar, setCollapsed } =
+    props;
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Chỉ collapse khi scroll xuống > 150px
+      if (currentScrollY > lastScrollY && currentScrollY > 100 && !collapsed) {
+        setCollapsed(true);
+      }
+      // Chỉ expand lại khi scroll lên và < 50px
+      else if (
+        currentScrollY < lastScrollY &&
+        currentScrollY < 50 &&
+        collapsed
+      ) {
+        setCollapsed(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [collapsed, setCollapsed]);
+
   return (
     <>
       <ProSidebar
@@ -45,14 +66,13 @@ const SideBar = (props) => {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-              //   display: "flex",
-              //   alignItems: "center",
             }}
           >
             <DiReact
               size={"3rem"}
-              color={"00bfff"}
-              style={{ marginLeft: "9px" }}
+              color={"#00bfff"}
+              style={{ marginLeft: "9px", cursor: "pointer" }}
+              onClick={() => setCollapsed(!collapsed)}
             />
             <span
               style={{
@@ -73,7 +93,6 @@ const SideBar = (props) => {
             <MenuItem
               style={{ fontSize: "18px" }}
               icon={<FaTachometerAlt style={{ fontSize: "18px" }} />}
-              //   suffix={<span className="badge red">New</span>}
             >
               <Link to="/admin" />
               Dashboard
@@ -82,13 +101,12 @@ const SideBar = (props) => {
               style={{ fontSize: "18px" }}
               icon={<FaGem style={{ fontSize: "18px" }} />}
             >
-              {" "}
-              Intruction{" "}
+              Intruction
             </MenuItem>
           </Menu>
+
           <Menu iconShape="circle">
             <SubMenu
-              //   suffix={<span className="badge yellow">3</span>}
               style={{ fontSize: "18px" }}
               icon={<FaList style={{ fontSize: "18px" }} />}
               title={"Management"}

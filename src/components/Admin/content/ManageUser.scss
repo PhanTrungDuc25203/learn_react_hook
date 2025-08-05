@@ -16,6 +16,18 @@
       padding: 10px 30px;
     }
     .user-data-table-container {
+      margin: 20px 30px;
+
+      .no-user-found {
+        text-align: center;
+        font-size: 18px;
+        height: 6em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #777;
+        font-style: italic;
+      }
     }
   }
 }

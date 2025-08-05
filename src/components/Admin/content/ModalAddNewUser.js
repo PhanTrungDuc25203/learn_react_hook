@@ -96,7 +96,7 @@ const ModalAddNewUser = () => {
         theme: "colored",
         // transition: Bounce,
       });
-      handleClose();
+      //   handleClose();
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM, {

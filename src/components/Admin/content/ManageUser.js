@@ -1,5 +1,6 @@
 import ModalAddNewUser from "./ModalAddNewUser";
 import "./ManageUser.scss";
+import UserDataTable from "./UserDataTable";
 
 const ManageUser = (props) => {
   return (
@@ -9,7 +10,9 @@ const ManageUser = (props) => {
         <div className="user-data-operation">
           <ModalAddNewUser />
         </div>
-        <div className="user-data-table-container">data's table</div>
+        <div className="user-data-table-container">
+          <UserDataTable />
+        </div>
       </div>
     </div>
   );
