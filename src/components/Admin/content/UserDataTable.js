@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/apiServices";
+import { useSelector } from "react-redux";
 
 const UserDataTable = (props) => {
   const [userList, setUserList] = useState([]);
+  const shouldRefresh = useSelector(
+    (state) => state.user.shouldRefreshUserList
+  );
 
   useEffect(() => {
     getUserList();
   }, []);
+
+  useEffect(() => {
+    getUserList();
+  }, [shouldRefresh]);
 
   const getUserList = async () => {
     let res = await getAllUser();
@@ -19,7 +27,7 @@ const UserDataTable = (props) => {
     <table className="table table-light table-striped table-hover table-bordered">
       <thead>
         <tr>
-          <th scope="col">No</th>
+          <th scope="col">ID</th>
           <th scope="col">Email</th>
           <th scope="col">Username</th>
           <th scope="col">Role</th>
@@ -30,7 +38,7 @@ const UserDataTable = (props) => {
         {userList && userList.length > 0 ? (
           userList.map((item, index) => (
             <tr key={`user-${index}`}>
-              <td>{index + 1}</td>
+              <td>{item.id}</td>
               <td>{item.email}</td>
               <td>{item.username}</td>
               <td>{item.role}</td>

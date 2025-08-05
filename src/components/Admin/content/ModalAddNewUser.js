@@ -4,9 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import { FaCameraRetro } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { postAddNewUser } from "../../../services/apiServices";
+import { useDispatch } from "react-redux";
+import { triggerRefreshUserList } from "../../../redux/action/userAction";
 
 const ModalAddNewUser = () => {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setShow(false);
@@ -96,7 +99,8 @@ const ModalAddNewUser = () => {
         theme: "colored",
         // transition: Bounce,
       });
-      //   handleClose();
+      dispatch(triggerRefreshUserList());
+      handleClose();
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM, {
