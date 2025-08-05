@@ -38,11 +38,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 6px;
+          gap: 8px;
           height: 25px;
           width: 100%;
           .action-btn {
             width: 15px;
+            max-width: 15px;
             height: 15px;
             border-radius: 20px;
             overflow: hidden;
@@ -51,7 +52,7 @@
             font-size: 0; /* Ẩn chữ ban đầu */
             border: none;
             cursor: pointer;
-            transition: all 0.5s ease;
+            transition: max-width 0.4s ease, padding 0.4s ease;
             transform-origin: center center;
 
             &::after {
@@ -66,10 +67,15 @@
               //   line-height: 0.5;
             }
 
+            &::before {
+              min-width: 15px;
+            }
+
             &:hover {
               width: auto;
               padding: 0px 10px;
-              border-radius: 20px;
+              //   border-radius: 20px;
+              max-width: 90px;
               //   transform: scaleX(1.8);
               //   background-color: inherit;
 
