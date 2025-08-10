@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAllUser } from "../../../services/apiServices";
+import { getAllUser } from "../../../../services/apiServices";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { showModalUpdateUser } from "../../../redux/action/userAction";
+import { showModalUpdateUser } from "../../../../redux/action/userAction";
 
 const UserDataTable = (props) => {
   const [userList, setUserList] = useState([]);

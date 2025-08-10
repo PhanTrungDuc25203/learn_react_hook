@@ -1,17 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FaCameraRetro } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { hideModalUpdateUser } from "../../../redux/action/userAction";
-import { putUpdateUser } from "../../../services/apiServices";
-import { triggerRefreshUserList } from "../../../redux/action/userAction";
+import { postAddNewUser } from "../../../../services/apiServices";
+import { useDispatch } from "react-redux";
+import { triggerRefreshUserList } from "../../../../redux/action/userAction";
 
 const ModalAddNewUser = () => {
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const selectedUser = useSelector((state) => state.user.selectedUser);
-  const show = useSelector((state) => state.user.showModalUpdateUser);
+
+  const handleClose = () => {
+    setShow(false);
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setRole("USER");
+    setImage("");
+    setPreviewImage("");
+  };
+  const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,16 +28,6 @@ const ModalAddNewUser = () => {
   const [role, setRole] = useState("USER");
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-
-  const handleClose = () => {
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setRole("USER");
-    setImage("");
-    setPreviewImage("");
-    dispatch(hideModalUpdateUser());
-  };
 
   const handleUploadImage = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
@@ -39,21 +38,55 @@ const ModalAddNewUser = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("Old data: ", selectedUser);
-    if (selectedUser) {
-      setEmail(selectedUser.email || "");
-      setUsername(selectedUser.username || "");
-      setRole(selectedUser.role || "USER");
-      if (selectedUser.image) {
-        setPreviewImage(`data:image/jpeg;base64,${selectedUser.image}`);
-      }
-      setImage(selectedUser.image);
-    }
-  }, [selectedUser]);
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
 
-  const handleSubmitUpdateUser = async () => {
-    let data = await putUpdateUser(selectedUser.id, username, role, image);
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+    return regex.test(password);
+  };
+
+  const handleSubmitAddNewUser = async () => {
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      toast.error("Your email is not valid!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+      return;
+    }
+    const isPasswordValid = validatePassword(password);
+    if (!isPasswordValid) {
+      toast.error(
+        "Password must be at least 6 characters long and contain at least one uppercase letter, one number, and one special character.!",
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          // transition: Bounce,
+        }
+      );
+      return;
+    }
+
+    let data = await postAddNewUser(email, password, username, role, image);
     if (data && data.EC === 0) {
       toast.success(data.EM, {
         position: "top-center",
@@ -86,6 +119,10 @@ const ModalAddNewUser = () => {
 
   return (
     <>
+      <Button variant="primary" onClick={handleShow}>
+        Add new User
+      </Button>
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -108,8 +145,6 @@ const ModalAddNewUser = () => {
                 className="form-control"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                readOnly
-                disabled
               />
             </div>
             <div className="col-md-4"></div>
@@ -118,10 +153,8 @@ const ModalAddNewUser = () => {
               <input
                 type="password"
                 className="form-control"
-                value={"PhdCswia*dsald123"}
+                value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                readOnly
-                disabled
               />
             </div>
             <div className="col-md-4"></div>
@@ -146,6 +179,7 @@ const ModalAddNewUser = () => {
               </select>
             </div>
             <div className="col-md-12">
+              {/* <label className="form-label">Avatar</label> */}
               <input
                 type="file"
                 hidden
@@ -154,10 +188,13 @@ const ModalAddNewUser = () => {
               />
             </div>
             <div className="col-md-3 img-preview">
-              {previewImage && <img src={previewImage} alt="preview" />}
-              <label htmlFor="uploadImg">
-                <FaCameraRetro id="add-img-icon" />
-              </label>
+              {previewImage ? (
+                <img src={previewImage} alt="preview" />
+              ) : (
+                <label htmlFor="uploadImg">
+                  <FaCameraRetro id="add-img-icon" />
+                </label>
+              )}
             </div>
           </form>
         </Modal.Body>
@@ -165,8 +202,8 @@ const ModalAddNewUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
-            Save
+          <Button variant="primary" onClick={() => handleSubmitAddNewUser()}>
+            Add new User
           </Button>
         </Modal.Footer>
       </Modal>
