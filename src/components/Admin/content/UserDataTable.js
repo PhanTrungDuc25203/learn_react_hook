@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/apiServices";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { showModalUpdateUser } from "../../../redux/action/userAction";
 
 const UserDataTable = (props) => {
   const [userList, setUserList] = useState([]);
   const shouldRefresh = useSelector(
     (state) => state.user.shouldRefreshUserList
   );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserList();
@@ -19,6 +22,7 @@ const UserDataTable = (props) => {
   const getUserList = async () => {
     let res = await getAllUser();
     if (res.EC === 0) {
+      console.log("All data: ", res.DT);
       setUserList(res.DT);
     }
   };
@@ -51,6 +55,7 @@ const UserDataTable = (props) => {
                   <button
                     className="action-btn update-btn"
                     data-label="Update"
+                    onClick={() => dispatch(showModalUpdateUser(item))}
                   ></button>
                   <button
                     className="action-btn delete-btn"
