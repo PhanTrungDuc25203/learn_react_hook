@@ -3,9 +3,10 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FaCameraRetro } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { postAddNewUser } from "../../../services/apiServices";
 import { useDispatch, useSelector } from "react-redux";
 import { hideModalUpdateUser } from "../../../redux/action/userAction";
+import { putUpdateUser } from "../../../services/apiServices";
+import { triggerRefreshUserList } from "../../../redux/action/userAction";
 
 const ModalAddNewUser = () => {
   const dispatch = useDispatch();
@@ -52,11 +53,35 @@ const ModalAddNewUser = () => {
   }, [selectedUser]);
 
   const handleSubmitUpdateUser = async () => {
-    setEmail(email);
-    setUsername(username);
-    setRole(role || "USER");
-    setImage(image);
-    // setPreviewImage("");
+    let data = await putUpdateUser(selectedUser.id, username, role, image);
+    if (data && data.EC === 0) {
+      toast.success(data.EM, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+      dispatch(triggerRefreshUserList());
+      handleClose();
+    }
+    if (data && data.EC !== 0) {
+      toast.error(data.EM, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        // transition: Bounce,
+      });
+    }
   };
 
   return (
@@ -129,13 +154,10 @@ const ModalAddNewUser = () => {
               />
             </div>
             <div className="col-md-3 img-preview">
-              {previewImage ? (
-                <img src={previewImage} alt="preview" />
-              ) : (
-                <label htmlFor="uploadImg">
-                  <FaCameraRetro id="add-img-icon" />
-                </label>
-              )}
+              {previewImage && <img src={previewImage} alt="preview" />}
+              <label htmlFor="uploadImg">
+                <FaCameraRetro id="add-img-icon" />
+              </label>
             </div>
           </form>
         </Modal.Body>
