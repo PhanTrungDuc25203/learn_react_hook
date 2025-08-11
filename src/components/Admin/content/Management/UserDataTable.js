@@ -3,6 +3,7 @@ import { getAllUser } from "../../../../services/apiServices";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { showModalUpdateUser } from "../../../../redux/action/userAction";
+import { showModalConfirmDeleteUser } from "../../../../redux/action/userAction";
 
 const UserDataTable = (props) => {
   const [userList, setUserList] = useState([]);
@@ -22,7 +23,6 @@ const UserDataTable = (props) => {
   const getUserList = async () => {
     let res = await getAllUser();
     if (res.EC === 0) {
-      console.log("All data: ", res.DT);
       setUserList(res.DT);
     }
   };
@@ -60,6 +60,7 @@ const UserDataTable = (props) => {
                   <button
                     className="action-btn delete-btn"
                     data-label="Delete"
+                    onClick={() => dispatch(showModalConfirmDeleteUser(item))}
                   ></button>
                 </div>
               </td>

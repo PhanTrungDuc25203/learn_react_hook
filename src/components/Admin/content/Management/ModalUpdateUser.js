@@ -40,7 +40,6 @@ const ModalAddNewUser = () => {
   };
 
   useEffect(() => {
-    console.log("Old data: ", selectedUser);
     if (selectedUser) {
       setEmail(selectedUser.email || "");
       setUsername(selectedUser.username || "");
