@@ -15,17 +15,21 @@ const UserDataTable = (props) => {
   );
   const dispatch = useDispatch();
   const [pageCount, setPageCount] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageClick = (event) => {
+    setCurrentPage(+event.selected);
     getUserList(+event.selected + 1);
   };
 
   useEffect(() => {
     getUserList(1);
+    setCurrentPage(0);
   }, []);
 
   useEffect(() => {
     getUserList(1);
+    setCurrentPage(0);
   }, [shouldRefresh]);
 
   //   const getUserList = async () => {
@@ -112,6 +116,7 @@ const UserDataTable = (props) => {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
+          forcePage={currentPage}
         />
       </div>
     </>
