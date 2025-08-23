@@ -70,3 +70,82 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Hướng dẫn sử dụng Redux để các component không phải cha-con cũng có thể giao tiếp được với nhau:
+## Trong dự án này có một phần là UserDataTable và ModalAddNewUser không phải cha-con nhưng mà mỗi khi Modal add thành công một user thì nó cần báo lại cho Table để Table biết mà gọi API lấy tất cả người dùng
+
+### Bước 1: 
+Tạo userAction.js trong redux/action/userAction.js:
+export const REFRESH_USER_LIST = 'REFRESH_USER_LIST';
+
+export const triggerRefreshUserList = () => {
+  return {
+    type: REFRESH_USER_LIST,
+  };
+};
+
+### Bước 2:
+Tạo userReducer.js trong redux/reducer/userReducer.js
+import { REFRESH_USER_LIST } from '../action/userAction';
+
+const initialState = {
+  shouldRefreshUserList: false,
+};
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case REFRESH_USER_LIST:
+      return {
+        ...state,
+        shouldRefreshUserList: !state.shouldRefreshUserList, // toggle để gây ra thay đổi
+      };
+    default:
+      return state;
+  }
+};
+
+export default userReducer;
+
+### Bước 3: Gộp reducer vào rootReducer:
+import { combineReducers } from 'redux';
+import counterReducer from './counterReducer';
+import userReducer from './userReducer';
+
+const rootReducer = combineReducers({
+  counter: counterReducer,
+  user: userReducer,
+});
+
+export default rootReducer;
+ ### Bước 4: Đảm bảo store dùng rootReducer:
+ redux/store.js:
+
+ import { createStore } from 'redux';
+import rootReducer from './reducer/rootReducer';
+
+const store = createStore(rootReducer);
+
+export default store;
+
+### Bước 5: dùng action trong ModalAddNewUser:
+
+import { useDispatch } from 'react-redux';
+import { triggerRefreshUserList } from '../../../redux/action/userAction';
+
+const dispatch = useDispatch();
+
+// thêm vào đoạn code khi thêm user thành công
+if (data && data.EC === 0) {
+  dispatch(triggerRefreshUserList());
+  handleClose();
+}
+
+### Bước 6: lắng nghe redux trong UserDataTable:
+import { useSelector } from 'react-redux';
+
+const shouldRefresh = useSelector((state) => state.user.shouldRefreshUserList);
+
+useEffect(() => {
+  getUserList();
+}, [shouldRefresh]); // Gọi lại mỗi khi flag đổi
+

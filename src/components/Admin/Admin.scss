@@ -1,0 +1,33 @@
+.admin-container {
+  width: 100%;
+  display: flex;
+  .admin-sidebar {
+    .pro-sidebar {
+      height: 100vh !important;
+      position: sticky;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .admin-content {
+    width: 100%;
+    .admin-header {
+      font-size: 25px;
+      color: #a9a9a9;
+      position: sticky;
+      top: 0.5rem;
+      left: 30px;
+      margin-left: 1rem;
+      //   left: 20rem;
+      height: 40px;
+      cursor: pointer;
+      transition: color 0.25s;
+      &:hover {
+        color: #717171;
+      }
+    }
+    .admin-main {
+    }
+  }
+}
