@@ -3,7 +3,6 @@ import "./Admin.scss";
 import { FaBars } from "react-icons/fa";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Admin = (props) => {
@@ -20,19 +19,6 @@ const Admin = (props) => {
         </div>
         <div className="admin-main">
           <Outlet />
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            // transition={Bounce}
-          />
         </div>
       </div>
     </div>
